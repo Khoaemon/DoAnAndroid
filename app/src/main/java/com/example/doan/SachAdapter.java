@@ -60,6 +60,13 @@ public class SachAdapter extends BaseAdapter {
             }
         });
 
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v_context, "OK!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return convertView;
     }
 }

@@ -3,4 +3,55 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imgSach"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_android"/>
+
+        <TextView
+            android:id="@+id/textViewTenSach"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="Tên Sách" />
+
+        <TextView
+            android:id="@+id/textViewGia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textColor="#f00"
+            android:text="100000" />
+
+        <TextView
+            android:id="@+id/textViewMoTa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Mô tả sách" />
+
+        <Button
+            android:id="@+id/buttonThem"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="Thêm vào giỏ hàng" />
+
+        <Button
+            android:id="@+id/buttonXemBinhLuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Xem bình luận" />
+
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
