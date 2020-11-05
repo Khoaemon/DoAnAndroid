@@ -21,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
         AnhXa();
 
-        sachArrayList.add(new Sach(1,"Học lập trình Android từ cơ bản đến nâng cao",null,"Dành cho những người mới bắt đầu", 150000));
-        sachArrayList.add(new Sach(2,"Học lập trình Android từ cơ bản đến nâng  cao 2",null,"Dành cho những người mới bắt đầu", 200000));
-        sachArrayList.add(new Sach(3,"Học lập trình Android từ cơ bản đến nâng  cao 3",null,"Dành cho những người mới bắt đầu", 250000));
+        sachArrayList.add(new Sach(1,"Học lập trình Android từ cơ bản đến nâng cao","","Dành cho những người mới bắt đầu", 150000,0));
+        sachArrayList.add(new Sach(2,"Học lập trình Android từ cơ bản đến nâng  cao 2","","Dành cho những người mới bắt đầu", 200000,0));
+        sachArrayList.add(new Sach(3,"Học lập trình Android từ cơ bản đến nâng  cao 3","","Dành cho những người mới bắt đầu", 250000,0));
 
         sachGridView.setAdapter(v_adapter);
 

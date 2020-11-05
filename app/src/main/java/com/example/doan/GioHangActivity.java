@@ -27,7 +27,7 @@ public class GioHangActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gio_hang);
 
         AnhXa();
-        giohangArrayList.add(new Sach(1, "Lập trình Android từ cơ bản đến nâng cao", null, "", 120000, 2));
+        giohangArrayList.add(new Sach(1, "Lập trình Android từ cơ bản đến nâng cao","","", 120000, 2));
 
         lvGioHang.setAdapter(v_adapter);
     }

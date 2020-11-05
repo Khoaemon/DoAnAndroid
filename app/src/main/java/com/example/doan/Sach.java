@@ -6,13 +6,23 @@ public class Sach {
     private String ImgURL;
     private String MoTa;
     private double Gia;
+    private int SoLuong;
 
-    public Sach(int maSach, String tenSach, String imgURL, String moTa, double gia) {
+    public Sach(int maSach, String tenSach, String imgURL, String moTa, double gia, int soLuong) {
         MaSach = maSach;
         TenSach = tenSach;
         ImgURL = imgURL;
         MoTa = moTa;
         Gia = gia;
+        SoLuong = soLuong;
+    }
+
+    public int getSoLuong() {
+        return SoLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        SoLuong = soLuong;
     }
 
     public int getMaSach() {

@@ -10,7 +10,7 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/imgSach"
+            android:id="@+id/imgChiTietSach"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center_horizontal"

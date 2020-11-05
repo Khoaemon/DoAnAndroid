@@ -1,6 +1,7 @@
 package com.example.doan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class SachAdapter extends BaseAdapter {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v_context, "OK!", Toast.LENGTH_SHORT).show();
+                v_context.startActivity(new Intent(v_context, BinhLuanActivity.class));
             }
         });
 

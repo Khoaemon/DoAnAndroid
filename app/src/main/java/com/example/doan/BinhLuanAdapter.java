@@ -16,6 +16,12 @@ public class BinhLuanAdapter extends BaseAdapter {
     private int c_layout;
     private ArrayList<BinhLuan> binhluanArrayList;
 
+    public BinhLuanAdapter(Context v_context, int c_layout, ArrayList<BinhLuan> binhluanArrayList) {
+        this.v_context = v_context;
+        this.c_layout = c_layout;
+        this.binhluanArrayList = binhluanArrayList;
+    }
+
     @Override
     public int getCount() {
         return binhluanArrayList.size();
@@ -40,7 +46,6 @@ public class BinhLuanAdapter extends BaseAdapter {
         TextView v_noidung = (TextView) convertView.findViewById(R.id.textViewNoiDungBinhLuan);
 
         BinhLuan v_binhluan = binhluanArrayList.get(position);
-
         v_ten.setText(v_binhluan.getTenNguoiDung());
         v_noidung.setText(v_binhluan.getNoiDung());
 

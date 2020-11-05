@@ -5,10 +5,9 @@
 
     <ImageView
         android:id="@+id/imgSach"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:scaleType="centerInside"
-        android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_android" />
 
     <TextView
@@ -29,6 +28,6 @@
     <Button
         android:id="@+id/buttonThem"
         android:layout_width="match_parent"
-        android:layout_height="40sp"
+        android:layout_height="wrap_content"
         android:text="mua luôn" />
 </LinearLayout>
