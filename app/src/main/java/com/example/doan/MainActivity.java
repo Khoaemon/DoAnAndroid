@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -33,6 +35,20 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new SachFragment()).commit();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.dang_nhap, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.menuDangNhap){
+            startActivity(new Intent(this, DangNhapActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public boolean ReplaceFragment(MenuItem item){

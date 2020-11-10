@@ -12,16 +12,17 @@
         android:text="Đăng Nhập"
         android:textSize="50dp"
         android:textColor="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/editTextUserName"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="50dp"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/editTextUserName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
+        android:drawableLeft="@drawable/ic_user"
         android:hint="Nhập tài khoản"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,6 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
+        android:drawableLeft="@drawable/ic_password"
         android:hint="Nhập mật khẩu"
         app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
         app:layout_constraintLeft_toLeftOf="parent"
