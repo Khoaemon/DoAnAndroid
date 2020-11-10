@@ -23,10 +23,17 @@ public class ChitietsachActivity extends AppCompatActivity {
 
         AnhXa();
 
-        hinhanh.setOnClickListener(new View.OnClickListener() {
+        xembinhluan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startService(new Intent(ChitietsachActivity.this, GioHangActivity.class));
+                startActivity(new Intent(ChitietsachActivity.this, BinhLuanActivity.class));
+            }
+        });
+
+        themgiohang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ChitietsachActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
             }
         });
     }

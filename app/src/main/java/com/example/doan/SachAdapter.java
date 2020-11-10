@@ -64,7 +64,7 @@ public class SachAdapter extends BaseAdapter {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v_context.startActivity(new Intent(v_context, BinhLuanActivity.class));
+                v_context.startActivity(new Intent(v_context, ChitietsachActivity.class));
             }
         });
 

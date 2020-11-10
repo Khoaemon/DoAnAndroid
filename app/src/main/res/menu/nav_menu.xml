@@ -3,21 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
+        android:onClick="ReplaceFragment"
         android:id="@+id/book"
         android:icon="@drawable/ic_book"
         android:title=""/>
 
     <item
+        android:onClick="ReplaceFragment"
         android:id="@+id/personalinfo"
         android:icon="@drawable/ic_personal_inf"
         android:title=""/>
 
     <item
+        android:onClick="ReplaceFragment"
         android:id="@+id/cart"
         android:icon="@drawable/ic_cart"
         android:title=""/>
 
     <item
+        android:onClick="ReplaceFragment"
         android:id="@+id/history"
         android:icon="@drawable/ic_history"
         android:title=""/>

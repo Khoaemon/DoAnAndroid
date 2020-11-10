@@ -1,37 +1,73 @@
 package com.example.doan;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
+
+import com.example.doan.fragments.GioHangFragment;
+import com.example.doan.fragments.LichSuFragment;
+import com.example.doan.fragments.SachFragment;
+import com.example.doan.fragments.ThongTinCaNhanFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    GridView sachGridView;
-    ArrayList<Sach> sachArrayList;
-    SachAdapter v_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_xemhang);
+        setContentView(R.layout.activity_main);
 
-        AnhXa();
-
-        sachArrayList.add(new Sach(1,"Học lập trình Android từ cơ bản đến nâng cao","","Dành cho những người mới bắt đầu", 150000,0));
-        sachArrayList.add(new Sach(2,"Học lập trình Android từ cơ bản đến nâng  cao 2","","Dành cho những người mới bắt đầu", 200000,0));
-        sachArrayList.add(new Sach(3,"Học lập trình Android từ cơ bản đến nâng  cao 3","","Dành cho những người mới bắt đầu", 250000,0));
-
-        sachGridView.setAdapter(v_adapter);
-
+        if(savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new SachFragment()).commit();
+        }
     }
 
-    private void AnhXa() {
-        sachGridView = (GridView) findViewById(R.id.gridviewBook);
-        sachArrayList = new ArrayList<>();
-        v_adapter = new SachAdapter(MainActivity.this, R.layout.o_sach, sachArrayList);
+    public boolean ReplaceFragment(MenuItem item){
+        FragmentManager v_fragmentManager = getSupportFragmentManager();
+        FragmentTransaction v_fragmentTransaction = v_fragmentManager.beginTransaction();
+        Fragment v_fragment = null;
+        switch (item.getItemId()){
+            case R.id.book: v_fragment = new SachFragment();
+                break;
+            case R.id.personalinfo: v_fragment = new ThongTinCaNhanFragment();
+                break;
+            case R.id.cart: v_fragment = new GioHangFragment();
+                break;
+            case R.id.history: v_fragment = new LichSuFragment();
+                break;
+        }
+        v_fragmentTransaction.replace(R.id.frlayout, v_fragment);
+        v_fragmentTransaction.commit();
+        return false;
     }
+
+    /*private void botNavEvent(BottomNavigationView v_botNav) {
+        v_botNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.book:
+                        break;
+                    case R.id.personalinfo: break;
+                    case R.id.cart: break;
+                    case R.id.history: break;
+                }
+                return false;
+            }
+        });
+    }*/
+
 }

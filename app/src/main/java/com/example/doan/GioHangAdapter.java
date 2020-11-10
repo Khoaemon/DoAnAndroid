@@ -11,17 +11,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 
 public class GioHangAdapter extends BaseAdapter {
 
-    private GioHangActivity v_context;
+    private Context v_context;
     private int c_layout;
     private ArrayList<Sach> sachArrayList;
+    EventListener listener;
 
-    public GioHangAdapter(GioHangActivity v_context, int c_layout, ArrayList<Sach> sachArrayList) {
+    public interface EventListener {
+        void DialogXoaGioHang(String tensach);
+    }
+
+    public GioHangAdapter(Context v_context, int c_layout, ArrayList<Sach> sachArrayList, EventListener listener) {
         this.v_context = v_context;
         this.c_layout = c_layout;
         this.sachArrayList = sachArrayList;
+        this.listener = listener;
     }
 
     @Override
@@ -61,7 +68,7 @@ public class GioHangAdapter extends BaseAdapter {
         btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v_context.DialogXoaGioHang(v_sanphamgiohang.getTenSach());
+                listener.DialogXoaGioHang(v_sanphamgiohang.getTenSach());
             }
         });
 
@@ -81,4 +88,6 @@ public class GioHangAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+
 }

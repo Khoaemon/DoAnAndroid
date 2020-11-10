@@ -43,6 +43,8 @@
                 android:id="@+id/buttonGiam"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/btnColor"
                 android:text="-" />
             <TextView
                 android:id="@+id/textViewSL"
@@ -54,6 +56,8 @@
                 android:id="@+id/buttonTang"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/btnColor"
                 android:text="+" />
         </LinearLayout>
 

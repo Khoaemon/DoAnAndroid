@@ -30,33 +30,20 @@
                 android:layout_height="match_parent"
                 android:text="Tìm"
                 android:backgroundTint="@color/colorPrimary"
-                android:textColor="#fff"
+                android:textColor="@color/btnColor"
                 android:layout_weight="2"/>
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/frlayout"
+        <GridView
+            android:id="@+id/gridviewBook"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8"
-            android:padding="10dp">
-            <GridView
-                android:id="@+id/gridviewBook"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:numColumns="2"
-                android:verticalSpacing="10dp"
-                android:horizontalSpacing="10dp" />
-        </FrameLayout>
+            android:numColumns="2"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_weight="9"
+            android:padding="10dp"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bot_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/colorPrimary"
-            app:itemIconTint="#fff"
-            app:menu="@menu/nav_menu"
-            android:layout_weight="1"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,13 +43,17 @@
             android:id="@+id/buttonThem"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:text="Thêm vào giỏ hàng" />
+            android:text="Thêm vào giỏ hàng"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/btnColor"/>
 
         <Button
             android:id="@+id/buttonXemBinhLuan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xem bình luận" />
+            android:text="Xem bình luận"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/btnColor"/>
 
 
     </LinearLayout>

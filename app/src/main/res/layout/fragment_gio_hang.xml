@@ -28,6 +28,8 @@
         android:id="@+id/buttonThanhToan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/btnColor"
         android:text="Thanh Toán!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
