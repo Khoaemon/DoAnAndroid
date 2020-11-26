@@ -3,26 +3,16 @@ package com.example.doan;
 public class Sach {
     private int MaSach;
     private String TenSach;
-    private String ImgURL;
+    private int ImgURL;
     private String MoTa;
     private double Gia;
-    private int SoLuong;
 
-    public Sach(int maSach, String tenSach, String imgURL, String moTa, double gia, int soLuong) {
+    public Sach(int maSach, String tenSach, int imgURL, String moTa, double gia) {
         MaSach = maSach;
         TenSach = tenSach;
         ImgURL = imgURL;
         MoTa = moTa;
         Gia = gia;
-        SoLuong = soLuong;
-    }
-
-    public int getSoLuong() {
-        return SoLuong;
-    }
-
-    public void setSoLuong(int soLuong) {
-        SoLuong = soLuong;
     }
 
     public int getMaSach() {
@@ -41,11 +31,11 @@ public class Sach {
         TenSach = tenSach;
     }
 
-    public String getImgURL() {
+    public int getImgURL() {
         return ImgURL;
     }
 
-    public void setImgURL(String imgURL) {
+    public void setImgURL(int imgURL) {
         ImgURL = imgURL;
     }
 

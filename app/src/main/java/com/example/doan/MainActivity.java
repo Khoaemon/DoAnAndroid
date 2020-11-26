@@ -22,15 +22,19 @@ import com.example.doan.fragments.SachFragment;
 import com.example.doan.fragments.ThongTinCaNhanFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String DB_PATH = "data/data/com.example.doan/databases/bansach.sqlite";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        doDBCheck();
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new SachFragment()).commit();
@@ -68,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
         v_fragmentTransaction.replace(R.id.frlayout, v_fragment);
         v_fragmentTransaction.commit();
         return false;
+    }
+
+    private void doDBCheck()
+    {
+        try{
+            File file = new File(DB_PATH);
+            file.delete();
+        }catch(Exception ex)
+        {}
     }
 
     /*private void botNavEvent(BottomNavigationView v_botNav) {

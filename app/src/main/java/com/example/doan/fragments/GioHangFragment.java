@@ -35,7 +35,7 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
 
         AnhXa(view);
 
-        giohangArrayList.add(new Sach(1, "Lập trình Android từ cơ bản đến nâng cao","","", 120000, 2));
+        //giohangArrayList.add(new Sach(1, "Lập trình Android từ cơ bản đến nâng cao",0,"", 120000, 2));
 
         lvGioHang.setAdapter(v_adapter);
 

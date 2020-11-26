@@ -63,7 +63,7 @@ public class GioHangAdapter extends BaseAdapter {
 
         v_tensach.setText(v_sanphamgiohang.getTenSach());
         v_giaban.setText(v_sanphamgiohang.getGia()+"");
-        v_sl.setText(v_sanphamgiohang.getSoLuong()+"");
+        //v_sl.setText(v_sanphamgiohang.getSoLuong()+"");
 
         btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override
