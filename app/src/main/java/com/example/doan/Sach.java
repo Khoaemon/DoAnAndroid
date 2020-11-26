@@ -1,6 +1,8 @@
 package com.example.doan;
 
-public class Sach {
+import java.io.Serializable;
+
+public class Sach implements Serializable {
     private int MaSach;
     private String TenSach;
     private int ImgURL;

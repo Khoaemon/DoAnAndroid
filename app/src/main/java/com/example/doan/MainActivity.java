@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        doDBCheck();
+        //doDBCheck();
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new SachFragment()).commit();
@@ -74,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    private void doDBCheck()
+    /*private void doDBCheck()
     {
         try{
             File file = new File(DB_PATH);
             file.delete();
         }catch(Exception ex)
         {}
-    }
+    }*/
 
     /*private void botNavEvent(BottomNavigationView v_botNav) {
         v_botNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

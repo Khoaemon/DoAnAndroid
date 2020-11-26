@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class SachAdapter extends BaseAdapter {
@@ -50,7 +51,7 @@ public class SachAdapter extends BaseAdapter {
         ImageView img = (ImageView) convertView.findViewById(R.id.imgSach);
         Button btnThem = (Button) convertView.findViewById(R.id.buttonThem);
 
-        Sach v_sach = sachArrayList.get(position);
+        final Sach v_sach = sachArrayList.get(position);
         v_tensach.setText(v_sach.getTenSach());
         v_giaban.setText(v_sach.getGia()+" đồng");
         img.setImageResource(v_sach.getImgURL());
@@ -65,7 +66,9 @@ public class SachAdapter extends BaseAdapter {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v_context.startActivity(new Intent(v_context, ChitietsachActivity.class));
+                Intent intent = new Intent(v_context, ChitietsachActivity.class);
+                intent.putExtra("sach", v_sach);
+                v_context.startActivity(intent);
             }
         });
 
