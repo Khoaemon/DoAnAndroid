@@ -1,5 +1,6 @@
 package com.example.doan;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,12 +15,15 @@ import java.util.ArrayList;
 
 public class ChitietsachActivity extends AppCompatActivity {
 
-    TextView tensach, giaban, mota;
+    TextView tensach, giaban, mota, tacgia, theloai;
     ImageView hinhanh;
     Button themgiohang, xembinhluan;
     Sach v_sach;
     Intent v_intent;
-
+    Database v_dtb;
+    ArrayList<String> v_theloaiArray;
+    ArrayList<String> v_tacgiaArray;
+    int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +33,31 @@ public class ChitietsachActivity extends AppCompatActivity {
         AnhXa();
 
         v_sach = (Sach) v_intent.getSerializableExtra("sach");
+
+        v_tacgiaArray = v_dtb.LayTacGiaSach(v_sach.getMaSach());
+        v_theloaiArray = v_dtb.LayTheLoaiSach(v_sach.getMaSach());
+
+        flag = v_tacgiaArray.size() - 1;
+        for(int i = 0; i < v_tacgiaArray.size(); i++){
+            if(i == flag){
+                tacgia.append(v_tacgiaArray.get(i)+")");
+            }else{
+                tacgia.append(v_tacgiaArray.get(i)+", ");
+            }
+        }
+
+        flag = v_theloaiArray.size() - 1;
+        for(int i = 0; i < v_theloaiArray.size(); i++){
+            if(i == flag){
+                theloai.append(v_theloaiArray.get(i)+".");
+            }else{
+                theloai.append(v_theloaiArray.get(i)+", ");
+            }
+        }
+
         tensach.setText(v_sach.getTenSach().toString());
         mota.setText(v_sach.getMoTa().toString());
-        giaban.setText(v_sach.getGia()+"");
+        giaban.setText(v_sach.getGia()+" VNĐ");
         hinhanh.setImageResource(v_sach.getImgURL());
 
         xembinhluan.setOnClickListener(new View.OnClickListener() {
@@ -53,11 +79,17 @@ public class ChitietsachActivity extends AppCompatActivity {
 
     private void AnhXa() {
         tensach = (TextView) findViewById(R.id.textViewTenSach);
+        tensach.setSelected(true);
         giaban = (TextView) findViewById(R.id.textViewGia);
         mota = (TextView) findViewById(R.id.textViewMoTa);
+        tacgia = (TextView) findViewById(R.id.textViewTacGia);
+        theloai = (TextView) findViewById(R.id.textViewTheLoaiSach);
         hinhanh = (ImageView) findViewById(R.id.imgChiTietSach);
         themgiohang = (Button) findViewById(R.id.buttonThem);
         xembinhluan = (Button) findViewById(R.id.buttonXemBinhLuan);
         v_intent = getIntent();
+        v_dtb = new Database(this);
+        v_tacgiaArray = new ArrayList<>();
+        v_theloaiArray = new ArrayList<>();
     }
 }

@@ -53,7 +53,7 @@ public class SachAdapter extends BaseAdapter {
 
         final Sach v_sach = sachArrayList.get(position);
         v_tensach.setText(v_sach.getTenSach());
-        v_giaban.setText(v_sach.getGia()+" đồng");
+        v_giaban.setText(v_sach.getGia()+" VNĐ");
         img.setImageResource(v_sach.getImgURL());
 
         btnThem.setOnClickListener(new View.OnClickListener() {

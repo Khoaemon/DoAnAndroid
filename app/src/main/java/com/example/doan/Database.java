@@ -33,19 +33,49 @@ public class Database extends SQLiteOpenHelper {
         Cursor v_danhsach = Xem("SELECT * FROM Sach");
         while(v_danhsach.moveToNext()){
             //Toast.makeText(this, ten, Toast.LENGTH_LONG).show();
-            a.add(new Sach(v_danhsach.getInt(0), v_danhsach.getString(1), v_danhsach.getInt(2), v_danhsach.getString(3), v_danhsach.getDouble(4)));
+            a.add(new Sach(
+                    v_danhsach.getInt(0),
+                    v_danhsach.getString(1),
+                    v_danhsach.getInt(2),
+                    v_danhsach.getString(3),
+                    v_danhsach.getDouble(4)
+            ));
         }
         return a;
     }
 
-    public ArrayList<BinhLuan> LayDanhSachBinhLuan(int masach){
+    public ArrayList<BinhLuan> LayDanhSachBinhLuan(int v_masach){
         ArrayList<BinhLuan> a = new ArrayList<>();
         Cursor v_danhsach = Xem("SELECT TenNguoiDung, NoiDung " +
                 "FROM BinhLuan b, NguoiDung n " +
-                "WHERE b.manguoidung = n.manguoidung and masach='"+masach+"'");
+                "WHERE b.manguoidung = n.manguoidung and masach='"+v_masach+"'");
         while(v_danhsach.moveToNext()){
-            //Toast.makeText(this, ten, Toast.LENGTH_LONG).show();
-            a.add(new BinhLuan(v_danhsach.getString(0), v_danhsach.getString(1)));
+            a.add(new BinhLuan(
+                    v_danhsach.getString(0),
+                    v_danhsach.getString(1)
+            ));
+        }
+        return a;
+    }
+
+    public ArrayList<String> LayTheLoaiSach(int v_masach){
+        ArrayList<String> a = new ArrayList<>();
+        Cursor v_danhsach = Xem("SELECT tentheloai " +
+                "FROM TheLoai tl, TheLoaiSach tls " +
+                "WHERE tl.matheloai = tls.matheloai AND masach='"+v_masach+"'");
+        while(v_danhsach.moveToNext()){
+            a.add(v_danhsach.getString(0));
+        }
+        return a;
+    }
+
+    public ArrayList<String> LayTacGiaSach(int v_masach){
+        ArrayList<String> a = new ArrayList<>();
+        Cursor v_danhsach = Xem("SELECT tentacgia " +
+                "FROM TacGiaSach tgs, TacGia tg " +
+                "WHERE tgs.matacgia = tg.matacgia AND masach='"+v_masach+"'");
+        while(v_danhsach.moveToNext()){
+            a.add(v_danhsach.getString(0));
         }
         return a;
     }
@@ -114,14 +144,16 @@ public class Database extends SQLiteOpenHelper {
                 "FOREIGN key(MaHD) REFERENCES HoaDon(MaHD),\n" +
                 "FOREIGN key(MaSach) REFERENCES Sach(MaSach)\n" +
                 ");");
-        db.execSQL("INSERT INTO Sach (TenSach, ImgURL, MoTa, Gia) VALUES ('Truyện Kiều', "+R.drawable.truyen_kieu+" , 'Sách của Nguyễn DU', 500000 );");
-        db.execSQL("INSERT INTO Sach (TenSach, ImgURL, MoTa, Gia) VALUES ('Đánh thức con người phi thường trong bạn', "+R.drawable.danh_thuc_con_nguoi_phi_thuong_trong_ban+" , 'Sách về động lực thúc đẩy bản thân', 30000 );");
-        db.execSQL("INSERT INTO Sach (TenSach, ImgURL, MoTa, Gia) VALUES ('Conan tập 96', "+R.drawable.conan_tap_96+" , 'Bộ truyện tranh thám tử hay nhất của Nhật bản', 20000 );");
-        db.execSQL("INSERT INTO Sach (TenSach, ImgURL, MoTa, Gia) VALUES ('Nghĩ giàu làm giàu', "+R.drawable.nghi_giau_lam_giau+" , 'sách thay đổi tư duy về việc kiếm tiền', 40000 );");
-        db.execSQL("INSERT INTO Sach (TenSach, ImgURL, MoTa, Gia) VALUES ('Doraemon tập 1', "+R.drawable.doraemon_tap_1+" , 'Chú mèo máy đến từ tương lai', 10000 );");
+        db.execSQL("INSERT INTO Sach (TenSach, ImgURL, MoTa, Gia) VALUES ('Truyện Kiều', "+R.drawable.truyen_kieu+" , 'Tác phẩm kể lại cuộc đời, những thử thách và đau khổ của Thúy Kiều, một phụ nữ trẻ xinh đẹp và tài năng, phải hy sinh thân mình để cứu gia đình. Để cứu cha và em trai khỏi tù, cô bán mình kết hôn với một người đàn ông trung niên, không biết rằng anh ta là một kẻ buôn người, và bị ép làm kĩ nữ trong lầu xanh.', 500000 );");
+        db.execSQL("INSERT INTO Sach (TenSach, ImgURL, MoTa, Gia) VALUES ('Đánh Thức Con Người Phi Thường Trong Bạn', "+R.drawable.danh_thuc_con_nguoi_phi_thuong_trong_ban+" , 'Đánh thức con người phi thường trong bạn” là cuốn sách giúp người đọc khám phá giá trị tiềm ẩn của bản thân để tạo nên những kết quả chính mình không ngờ đến. Cuốn sách được viết bởi Athony Robbins – một nhân chứng sống, một ngưỡi đã tìm được sự phi thường trong chính con người mình.', 30000 );");
+        db.execSQL("INSERT INTO Sach (TenSach, ImgURL, MoTa, Gia) VALUES ('Conan tập 96', "+R.drawable.conan_tap_96+" , 'Kaito Kid muốn giành lấy “Đôi Môi Tiên Nữ” và lần đầu đối mặt với Heiji Hattori!\n" +
+                "Makoto Kyogoku bị cuốn vào những vụ án xảy ra tại một địa điểm quay phim truyền hình…!?\n" +
+                "Những thông tin mới nhất liên quan tới ông trùm của Tổ chức Áo Đen sẽ được tiết lộ!!', 20000 );");
+        db.execSQL("INSERT INTO Sach (TenSach, ImgURL, MoTa, Gia) VALUES ('Nghĩ giàu làm giàu', "+R.drawable.nghi_giau_lam_giau+" , 'Think and Grow Rich - Nghĩ giàu và làm giàu là một trong những cuốn sách bán chạy nhất mọi thời đại. Đã hơn 60 triệu bản được phát hành với gần trăm ngôn ngữ trên toàn thế giới và được công nhận là cuốn sách tạo ra nhiều triệu phú, một cuốn sách truyền cảm hứng thành công nhiều hơn bất cứ cuốn sách kinh doanh nào trong lịch sử.', 40000 );");
+        db.execSQL("INSERT INTO Sach (TenSach, ImgURL, MoTa, Gia) VALUES ('Doraemon tập 1', "+R.drawable.doraemon_tap_1+" , 'Nội dung series kể về cuộc đời bất hạnh của cậu bé Nobita và chú mèo robot Doraemon từ tương lai đến giúp cuộc sống cậu trở nên tốt hơn.', 10000 );");
 
         db.execSQL("INSERT INTO TheLoaiSach (TenTheLoai) VALUES ('Self-help');");
-        db.execSQL("INSERT INTO TheLoaiSach (TenTheLoai) VALUES ('Truyen tranh');");
+        db.execSQL("INSERT INTO TheLoaiSach (TenTheLoai) VALUES ('Truyện tranh');");
         db.execSQL("INSERT INTO TheLoaiSach (TenTheLoai) VALUES ('Tiểu thuyết');");
 
         db.execSQL("INSERT INTO TheLoai (MaTheLoai,MaSach) VALUES (1,2);");
@@ -132,8 +164,8 @@ public class Database extends SQLiteOpenHelper {
 
         db.execSQL("INSERT INTO TacGia (TenTacGia) VALUES ('Nguyễn Du');");
         db.execSQL("INSERT INTO TacGia (TenTacGia) VALUES ('Anthony Robbins');");
-        db.execSQL("INSERT INTO TacGia (TenTacGia) VALUES ('Napoleon Hill');");
         db.execSQL("INSERT INTO TacGia (TenTacGia) VALUES ('Gosho Aoyama');");
+        db.execSQL("INSERT INTO TacGia (TenTacGia) VALUES ('Napoleon Hill');");
         db.execSQL("INSERT INTO TacGia (TenTacGia) VALUES ('Fujiko F. Fujio');");
 
         db.execSQL("INSERT INTO TacGiaSach (MaSach,MaTacGia) VALUES (1,1);");
@@ -149,12 +181,12 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO NguoiDung (TenNguoiDung,TenDangNhap,MatKhau,DiaChi,SDT,LoaiNguoiDung) VALUES ('Messi','nguoidung2','matkhau5','QUAN 2',02354567,0);");
         db.execSQL("INSERT INTO NguoiDung (TenNguoiDung,TenDangNhap,MatKhau,DiaChi,SDT,LoaiNguoiDung) VALUES ('Ronaldinho','nguoidung3','matkhau6','QUAN 3',05734567,0);");
 
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (1,4,'Truyện hay quá.');");
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (2,5,'Truyện hay ghê.');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (1,4,'Hay quá.');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (2,5,'Hay ghê.');");
         db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (3,3,'Mai mua thêm cuốn.');");
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (4,2,'Truyện này tác giả chém gió hay thật');");
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (5,1,'Truyện tranh sao giống kinh dị vậy??');");
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (6,4,'Truyện vừa tào lao mà cũng vừa có lý :v');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (4,2,'Tác giả chém gió hay thật');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (5,1,'Hay quá xá.');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (6,4,'Vừa tào lao mà cũng vừa có lý :v');");
 
         db.execSQL("INSERT INTO HoaDon (MaNguoiDung,NgayXuat,ThanhTien) VALUES (1,'2020-04-10 07:27:35', 300000.00);");
         db.execSQL("INSERT INTO HoaDon (MaNguoiDung,NgayXuat,ThanhTien) VALUES (2,'2020-05-20 08:27:09', 400000.00);");
@@ -173,11 +205,6 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    }
-
-    @Override
-    public void onOpen(SQLiteDatabase db) {
         db.execSQL("drop table if exists BINHLUAN;");
         db.execSQL("drop table if exists CTHD;\n");
         db.execSQL("drop table if exists HOADON;");
@@ -189,4 +216,18 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("drop table if exists SACH;");
         onCreate(db);
     }
+
+    /*@Override
+    public void onOpen(SQLiteDatabase db) {
+        db.execSQL("drop table if exists BINHLUAN;");
+        db.execSQL("drop table if exists CTHD;\n");
+        db.execSQL("drop table if exists HOADON;");
+        db.execSQL("drop table if exists NGUOIDUNG;");
+        db.execSQL("drop table if exists TACGIASACH;\n");
+        db.execSQL("drop table if exists TACGIA;");
+        db.execSQL("drop table if exists THELOAI;");
+        db.execSQL("drop table if exists THELOAISACH;");
+        db.execSQL("drop table if exists SACH;");
+        onCreate(db);
+    }*/
 }
