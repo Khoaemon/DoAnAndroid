@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final String DB_PATH = "data/data/com.example.doan/databases/bansach.sqlite";
+    private SharedPreferences v_taikhoan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //doDBCheck();
+        v_taikhoan = getSharedPreferences("taikhoan", MODE_PRIVATE);
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new SachFragment()).commit();
@@ -44,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.dang_nhap, menu);
-        return super.onCreateOptionsMenu(menu);
+        if(v_taikhoan.getString("taikhoan","").equals("")){
+            return super.onCreateOptionsMenu(menu);
+        }
+        return false;
     }
 
     @Override

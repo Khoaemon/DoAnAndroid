@@ -1,6 +1,8 @@
 package com.example.doan.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -28,9 +30,16 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
     Button btnThanhToan;
     ArrayList<Sach> giohangArrayList;
     GioHangAdapter v_adapter;
+    private SharedPreferences v_taikhoan;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        v_taikhoan = getContext().getSharedPreferences("taikhoan", Context.MODE_PRIVATE);
+        if(v_taikhoan.getString("taikhoan","").equals("")){
+            return inflater.inflate(R.layout.fragment_not_available, container, false);
+        }
+
         View view = inflater.inflate(R.layout.fragment_gio_hang, container, false);
 
         AnhXa(view);

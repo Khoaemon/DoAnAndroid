@@ -17,7 +17,7 @@
         android:id="@+id/textViewThanhTien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="100000"
+        android:text="0 VNĐ"
         android:textColor="#f00"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonThanhToan"

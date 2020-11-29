@@ -33,6 +33,7 @@
                     android:text="Họ Tên: "
                     android:textSize="20dp" />
                 <EditText
+                    android:id="@+id/editTextHoTen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập họ tên..."/>
@@ -50,6 +51,7 @@
                     android:textSize="20dp"
                     android:layout_weight="1"/>
                 <EditText
+                    android:id="@+id/editTextTenDangNhap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập tên đăng nhập..."/>
@@ -66,6 +68,7 @@
                     android:text="Mật khẩu: "
                     android:textSize="20dp" />
                 <EditText
+                    android:id="@+id/editTextMatKhau1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -83,6 +86,7 @@
                     android:text="Nhập lại mật khẩu: "
                     android:textSize="20dp" />
                 <EditText
+                    android:id="@+id/editTextMatKhau2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -100,6 +104,7 @@
                     android:text="Địa chỉ: "
                     android:textSize="20dp" />
                 <EditText
+                    android:id="@+id/editTextDiaChi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập địa chỉ..."/>
@@ -116,12 +121,15 @@
                     android:text="Số điện thoại: "
                     android:textSize="20dp" />
                 <EditText
+                    android:id="@+id/editTextSDT"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:hint="Nhập số điện thoại..."/>
             </LinearLayout>
 
             <Button
+                android:id="@+id/btnDangKy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đăng Ký!"

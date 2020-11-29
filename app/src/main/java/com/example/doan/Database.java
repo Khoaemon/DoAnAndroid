@@ -80,6 +80,28 @@ public class Database extends SQLiteOpenHelper {
         return a;
     }
 
+    public boolean KiemTraDangNhap(String v_tendangnhap, String v_matkhau){
+        Cursor v_user = Xem("SELECT * FROM NguoiDung WHERE tendangnhap='"+v_tendangnhap.toLowerCase()+"' AND matkhau='"+v_matkhau+"'");
+        if(v_user.moveToNext()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public Boolean KiemTraTonTaiTaiKhoan(String v_tendangnhap){
+        Cursor v_user = Xem("SELECT * FROM NguoiDung WHERE tendangnhap='"+v_tendangnhap.toLowerCase()+"'");
+        if(v_user.moveToNext()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void DangKyTaiKhoan(ArrayList<String> a){
+        ThemXoaSua("INSERT INTO NguoiDung VALUES(NULL,'"+a.get(0)+"','"+a.get(1).toLowerCase()+"','"+a.get(2)+"','"+a.get(3)+"','"+a.get(4)+"',0)");
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table  Sach(\n" +
