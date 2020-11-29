@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ public class DangNhapActivity extends AppCompatActivity {
     EditText edtTenDangNhap, edtMatKhau;
     Database v_dtb;
     private SharedPreferences v_taikhoan;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class DangNhapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DangNhapActivity.this, DangKyActivity.class));
+                finish();
             }
         });
     }

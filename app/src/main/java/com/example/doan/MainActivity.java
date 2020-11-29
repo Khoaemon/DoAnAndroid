@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String DB_PATH = "data/data/com.example.doan/databases/bansach.sqlite";
     private SharedPreferences v_taikhoan;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(menu!=null && v_taikhoan.getString("taikhoan","").equals("")){
+            MenuItem item = menu.findItem(R.id.menuDangNhap);
+            item.setVisible(true);
+        }else if (menu!=null && v_taikhoan.getString("taikhoan","").equals("")==false){
+            MenuItem item = menu.findItem(R.id.menuDangNhap);
+            item.setVisible(false);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         getMenuInflater().inflate(R.menu.dang_nhap, menu);
         if(v_taikhoan.getString("taikhoan","").equals("")){
             return super.onCreateOptionsMenu(menu);
@@ -69,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.book: v_fragment = new SachFragment();
                 break;
-            case R.id.personalinfo: v_fragment = new ThongTinCaNhanFragment();
+            case R.id.personalinfo: v_fragment = new ThongTinCaNhanFragment(menu);
                 break;
             case R.id.cart: v_fragment = new GioHangFragment();
                 break;

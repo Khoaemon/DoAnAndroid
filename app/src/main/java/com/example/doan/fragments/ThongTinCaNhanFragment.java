@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,7 +19,12 @@ import com.example.doan.R;
 public class ThongTinCaNhanFragment extends Fragment {
 
     private SharedPreferences v_taikhoan;
+    Menu menu;
     Button btnDangXuat;
+
+    public ThongTinCaNhanFragment(Menu menu) {
+        this.menu = menu;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +44,9 @@ public class ThongTinCaNhanFragment extends Fragment {
                 v_editor.clear();
                 v_editor.commit();
                 Toast.makeText(view.getContext(), "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
+                MenuItem item = menu.findItem(R.id.menuDangNhap);
+                item.setVisible(true);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new SachFragment()).commit();
             }
         });
 
