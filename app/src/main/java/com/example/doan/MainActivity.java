@@ -62,10 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.dang_nhap, menu);
-        if(v_taikhoan.getString("taikhoan","").equals("")){
-            return super.onCreateOptionsMenu(menu);
-        }
-        return false;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

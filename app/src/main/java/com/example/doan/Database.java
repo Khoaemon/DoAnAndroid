@@ -102,6 +102,32 @@ public class Database extends SQLiteOpenHelper {
         ThemXoaSua("INSERT INTO NguoiDung VALUES(NULL,'"+a.get(0)+"','"+a.get(1).toLowerCase()+"','"+a.get(2)+"','"+a.get(3)+"','"+a.get(4)+"',0)");
     }
 
+    public ArrayList<String> ThongTinCaNhan(String v_tendangnhap){
+        ArrayList<String> a = new ArrayList<>();
+        Cursor v_user = Xem("SELECT * FROM NguoiDung WHERE tendangnhap='"+v_tendangnhap.toLowerCase()+"'");
+        while(v_user.moveToNext()){
+            a.add(v_user.getString(0));
+            a.add(v_user.getString(1));
+            a.add(v_user.getString(2));
+            a.add(v_user.getString(4));
+            a.add(v_user.getString(5));
+        }
+        return a;
+    }
+
+    public Boolean KiemTraMatKhauCu(String v_tendangnhap, String v_matkhau){
+        Cursor v_check = Xem("SELECT * FROM NguoiDung WHERE MatKhau='"+v_matkhau+"' AND TenDangNhap='"+v_tendangnhap.toLowerCase()+"'");
+        if(v_check.moveToNext()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void DoiMatKhau(String v_tendangnhap, String v_matkhaumoi){
+        ThemXoaSua("UPDATE NguoiDung SET MatKhau='"+v_matkhaumoi+"' WHERE TenDangNhap='"+v_tendangnhap.toLowerCase()+"'");
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table  Sach(\n" +
