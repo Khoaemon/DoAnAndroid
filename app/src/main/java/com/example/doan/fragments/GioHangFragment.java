@@ -19,17 +19,23 @@ import android.widget.Toast;
 import com.example.doan.GioHangAdapter;
 import com.example.doan.R;
 import com.example.doan.Sach;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 
 public class GioHangFragment extends Fragment implements GioHangAdapter.EventListener{
 
-    ListView lvGioHang;
-    TextView thanhtien;
-    Button btnThanhToan;
-    ArrayList<Sach> giohangArrayList;
-    GioHangAdapter v_adapter;
+    private ListView lvGioHang;
+    private TextView thanhtien;
+    private Button btnThanhToan;
+    private ArrayList<Sach> giohangArrayList;
+    private GioHangAdapter v_adapter;
+    private SharedPreferences v_giohang;
+    private Gson v_gson;
+    private String v_json;
+    private LinkedHashMap v_lhm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +59,10 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
         btnThanhToan = (Button) view.findViewById(R.id.buttonThanhToan);
         giohangArrayList = new ArrayList<>();
         v_adapter = new GioHangAdapter(getContext(), R.layout.san_pham_gio_hang, giohangArrayList, this);
+        v_giohang = getContext().getSharedPreferences("giohang", Context.MODE_PRIVATE);
+        v_gson = new Gson();
+        v_json = v_giohang.getString("giohang","");
+        v_lhm = v_gson.fromJson(v_json, LinkedHashMap.class);
     }
 
     public void DialogXoaGioHang(String tensach){

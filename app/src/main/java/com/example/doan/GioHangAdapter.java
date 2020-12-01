@@ -1,6 +1,7 @@
 package com.example.doan;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,8 @@ public class GioHangAdapter extends BaseAdapter {
     private Context v_context;
     private int c_layout;
     private ArrayList<Sach> sachArrayList;
-    EventListener listener;
+    private EventListener listener;
+
 
     public interface EventListener {
         void DialogXoaGioHang(String tensach);
@@ -58,6 +60,7 @@ public class GioHangAdapter extends BaseAdapter {
         Button btnTang = (Button) convertView.findViewById(R.id.buttonTang);
         Button btnGiam = (Button) convertView.findViewById(R.id.buttonGiam);
         Button btnHuy = (Button) convertView.findViewById(R.id.buttonHuy);
+
 
         final Sach v_sanphamgiohang = sachArrayList.get(position);
 

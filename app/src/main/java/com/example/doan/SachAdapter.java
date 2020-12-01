@@ -2,6 +2,7 @@ package com.example.doan;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class SachAdapter extends BaseAdapter {
 
     private Context v_context;
     private int c_layout;
     private ArrayList<Sach> sachArrayList;
+    private SharedPreferences v_giohang;
+    LinkedHashMap<Integer, Integer> v_lhm;
 
     public SachAdapter(Context v_context, int c_layout, ArrayList<Sach> sachArrayList) {
         this.v_context = v_context;
@@ -50,6 +58,8 @@ public class SachAdapter extends BaseAdapter {
         TextView v_giaban = (TextView) convertView.findViewById(R.id.textViewGiaBan);
         ImageView img = (ImageView) convertView.findViewById(R.id.imgSach);
         Button btnThem = (Button) convertView.findViewById(R.id.buttonThem);
+        v_giohang = v_context.getSharedPreferences("giohang", MODE_PRIVATE);
+        v_lhm = new LinkedHashMap<>();
 
         final Sach v_sach = sachArrayList.get(position);
         v_tensach.setText(v_sach.getTenSach());
@@ -59,6 +69,17 @@ public class SachAdapter extends BaseAdapter {
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (v_lhm.get(v_sach.getMaSach())==null){
+                    v_lhm.put(v_sach.getMaSach(), 1);
+                }else{
+                    int v_soluong = v_lhm.get(v_sach.getMaSach());
+                    v_lhm.put(v_sach.getMaSach(), v_soluong++);
+                }
+                SharedPreferences.Editor v_editor = v_giohang.edit();
+                Gson v_gson = new Gson();
+                String v_json = v_gson.toJson(v_lhm);
+                v_editor.putString("giohang", v_json);
+                v_editor.commit();
                 Toast.makeText(v_context, "Đã thêm vào giỏ hàng.", Toast.LENGTH_SHORT).show();
             }
         });
