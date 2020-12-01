@@ -56,7 +56,6 @@ public class DangNhapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DangNhapActivity.this, DangKyActivity.class));
-                finish();
             }
         });
     }

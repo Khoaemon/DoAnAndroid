@@ -8,7 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -28,11 +31,42 @@ public class Database extends SQLiteOpenHelper {
         return database.rawQuery(sql, null);
     }
 
+    public String LayThoiGianHienTai(){
+        Calendar calendar = Calendar.getInstance();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String date = df.format(calendar.getTime());
+        return date;
+    }
+
+    public String LayMaNguoiDung(String v_tendangnhap){
+        Cursor v_cursor = Xem("SELECT MaNguoiDung FROM NguoiDung WHERE TenDangNhap='"+v_tendangnhap+"'");
+        int v_manguoidung = 0;
+        while(v_cursor.moveToNext()){
+            v_manguoidung = v_cursor.getInt(0);
+        }
+        return v_manguoidung+"";
+    }
+
     public ArrayList<Sach> LayDanhSachSach(){
         ArrayList<Sach> a = new ArrayList<>();
         Cursor v_danhsach = Xem("SELECT * FROM Sach");
         while(v_danhsach.moveToNext()){
             //Toast.makeText(this, ten, Toast.LENGTH_LONG).show();
+            a.add(new Sach(
+                    v_danhsach.getInt(0),
+                    v_danhsach.getString(1),
+                    v_danhsach.getInt(2),
+                    v_danhsach.getString(3),
+                    v_danhsach.getDouble(4)
+            ));
+        }
+        return a;
+    }
+
+    public ArrayList<Sach> TimKiemSach(String v_searchValue){
+        ArrayList<Sach> a = new ArrayList<>();
+        Cursor v_danhsach = Xem("SELECT * FROM Sach WHERE tensach LIKE '%"+v_searchValue+"%'");
+        while(v_danhsach.moveToNext()){
             a.add(new Sach(
                     v_danhsach.getInt(0),
                     v_danhsach.getString(1),
@@ -56,6 +90,11 @@ public class Database extends SQLiteOpenHelper {
             ));
         }
         return a;
+    }
+
+    public void ThemBinhLuan(String v_tendangnhap, int v_masach, String v_noidung){
+
+        ThemXoaSua("INSERT INTO BinhLuan VALUES('"+LayMaNguoiDung(v_tendangnhap)+"','"+v_masach+"','"+LayThoiGianHienTai()+"','"+v_noidung+"')");
     }
 
     public ArrayList<String> LayTheLoaiSach(int v_masach){
@@ -115,6 +154,18 @@ public class Database extends SQLiteOpenHelper {
         return a;
     }
 
+    public void SuaTen(String v_id, String v_noidung){
+        ThemXoaSua("UPDATE NguoiDung set TenNguoiDung='"+v_noidung+"' WHERE MaNguoiDung='"+v_id+"'");
+    }
+
+    public void SuaDiaChi(String v_id, String v_noidung){
+        ThemXoaSua("UPDATE NguoiDung set DiaChi='"+v_noidung+"' WHERE MaNguoiDung='"+v_id+"'");
+    }
+
+    public void SuaSDT(String v_id, String v_noidung){
+        ThemXoaSua("UPDATE NguoiDung set SDT='"+v_noidung+"' WHERE MaNguoiDung='"+v_id+"'");
+    }
+
     public Boolean KiemTraMatKhauCu(String v_tendangnhap, String v_matkhau){
         Cursor v_check = Xem("SELECT * FROM NguoiDung WHERE MatKhau='"+v_matkhau+"' AND TenDangNhap='"+v_tendangnhap.toLowerCase()+"'");
         if(v_check.moveToNext()){
@@ -127,6 +178,37 @@ public class Database extends SQLiteOpenHelper {
     public void DoiMatKhau(String v_tendangnhap, String v_matkhaumoi){
         ThemXoaSua("UPDATE NguoiDung SET MatKhau='"+v_matkhaumoi+"' WHERE TenDangNhap='"+v_tendangnhap.toLowerCase()+"'");
     }
+
+    public ArrayList<HoaDon> LayDanhSachHoaDon(String v_tendangnhap){
+        ArrayList<HoaDon> a = new ArrayList<>();
+        Cursor v_hoadon = Xem("SELECT * FROM HoaDon WHERE MaNguoiDung='"+LayMaNguoiDung(v_tendangnhap)+"'");
+        while(v_hoadon.moveToNext()){
+            a.add(new HoaDon(
+                    v_hoadon.getInt(0),
+                    v_hoadon.getString(2).substring(0,10),
+                    v_hoadon.getDouble(3)
+            ));
+        }
+        return a;
+    }
+
+    public ArrayList<CTHD> LayDanhSachCTHD(String v_mahd){
+        ArrayList<CTHD> a = new ArrayList<>();
+        Cursor v_cthd = Xem("SELECT Sach.MaSach, TenSach, SoLuong, DonGia " +
+                "FROM CTHD, Sach " +
+                "WHERE CTHD.MaSach = Sach.MaSach AND MaHD='"+v_mahd+"'");
+        while(v_cthd.moveToNext()){
+            a.add(new CTHD(
+                    v_cthd.getInt(0),
+                    v_cthd.getString(1),
+                    v_cthd.getInt(2),
+                    v_cthd.getDouble(3)
+                    ));
+        }
+        return a;
+    }
+
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -162,8 +244,9 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE  BinhLuan(\n" +
                 "MaNguoiDung INTEGER not null,\n" +
                 "MaSach INTEGER not null,\n" +
+                "NgayBinhLuan datetime not null,\n" +
                 "NoiDung text,\n" +
-                "primary key(MaNguoiDung, MaSach),\n" +
+                "primary key(MaNguoiDung, MaSach, NgayBinhLuan),\n" +
                 "FOREIGN key(MaSach) REFERENCES Sach(MaSach),\n" +
                 "FOREIGN key(MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)\n" +
                 ");");
@@ -229,12 +312,12 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO NguoiDung (TenNguoiDung,TenDangNhap,MatKhau,DiaChi,SDT,LoaiNguoiDung) VALUES ('Messi','nguoidung2','matkhau5','QUAN 2',02354567,0);");
         db.execSQL("INSERT INTO NguoiDung (TenNguoiDung,TenDangNhap,MatKhau,DiaChi,SDT,LoaiNguoiDung) VALUES ('Ronaldinho','nguoidung3','matkhau6','QUAN 3',05734567,0);");
 
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (1,4,'Hay quá.');");
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (2,5,'Hay ghê.');");
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (3,3,'Mai mua thêm cuốn.');");
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (4,2,'Tác giả chém gió hay thật');");
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (5,1,'Hay quá xá.');");
-        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NoiDung) VALUES (6,4,'Vừa tào lao mà cũng vừa có lý :v');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NgayBinhLuan,NoiDung) VALUES (1,4,'2020-04-10 07:27:35','Hay quá.');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NgayBinhLuan,NoiDung) VALUES (2,5,'2020-04-10 07:27:35','Hay ghê.');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NgayBinhLuan,NoiDung) VALUES (3,3,'2020-04-10 07:27:35','Mai mua thêm cuốn.');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NgayBinhLuan,NoiDung) VALUES (4,2,'2020-04-10 07:27:35','Tác giả chém gió hay thật');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NgayBinhLuan,NoiDung) VALUES (5,1,'2020-04-10 07:27:35','Hay quá xá.');");
+        db.execSQL("INSERT INTO BinhLuan (MaNguoiDung,MaSach,NgayBinhLuan,NoiDung) VALUES (6,4,'2020-04-10 07:27:35','Vừa tào lao mà cũng vừa có lý :v');");
 
         db.execSQL("INSERT INTO HoaDon (MaNguoiDung,NgayXuat,ThanhTien) VALUES (1,'2020-04-10 07:27:35', 300000.00);");
         db.execSQL("INSERT INTO HoaDon (MaNguoiDung,NgayXuat,ThanhTien) VALUES (2,'2020-05-20 08:27:09', 400000.00);");

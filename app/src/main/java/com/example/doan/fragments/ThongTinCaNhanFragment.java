@@ -1,7 +1,9 @@
 package com.example.doan.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,8 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +34,7 @@ public class ThongTinCaNhanFragment extends Fragment {
     private EditText edtMatKhauCu, edtMatKhauMoi1, edtMatKhauMoi2;
     private Menu menu;
     private Button btnDangXuat, btnDoiMatKhau;
+    private ImageView imgSuaTen, imgSuaSDT, imgSuaDiaChi;
     private Database v_dtb;
     private ArrayList<String> info;
 
@@ -49,12 +54,28 @@ public class ThongTinCaNhanFragment extends Fragment {
 
         AnhXa(view);
 
-        info = v_dtb.ThongTinCaNhan(v_taikhoan.getString("taikhoan",""));
-        tvMaNguoiDung.setText(" "+info.get(0));
-        tvTenNguoiDung.setText(" "+info.get(1));
-        tvTenDangNhap.setText(" "+info.get(2));
-        tvDiaChi.setText(" "+info.get(3));
-        tvSDT.setText(" "+info.get(4));
+        LayDanhSach();
+
+        imgSuaTen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogSua(tvMaNguoiDung.getText().toString(), "SuaTen", tvTenNguoiDung.getText().toString());
+            }
+        });
+
+        imgSuaSDT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogSua(tvMaNguoiDung.getText().toString(), "SuaSDT", tvSDT.getText().toString());
+            }
+        });
+
+        imgSuaDiaChi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogSua(tvMaNguoiDung.getText().toString(), "SuaDiaChi", tvDiaChi.getText().toString());
+            }
+        });
 
         btnDoiMatKhau.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +116,50 @@ public class ThongTinCaNhanFragment extends Fragment {
         return view;
     }
 
+    public void dialogSua(final String v_id, final String v_thongtinsua , String v_hienthilainoidung){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_capnhat);
+
+        final EditText edtNoiDungSua = (EditText) dialog.findViewById(R.id.editTextNoiDungSua);
+        edtNoiDungSua.setText(v_hienthilainoidung);
+        Button btnSua = (Button) dialog.findViewById(R.id.buttonSua);
+        Button btnHuySua = (Button) dialog.findViewById(R.id.buttonHuySua);
+
+        btnSua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String v_noidung = edtNoiDungSua.getText().toString().trim();
+                switch(v_thongtinsua){
+                    case "SuaTen": v_dtb.SuaTen(v_id, v_noidung); break;
+                    case "SuaSDT": v_dtb.SuaSDT(v_id, v_noidung); break;
+                    case "SuaDiaChi": v_dtb.SuaDiaChi(v_id, v_noidung); break;
+                }
+                Toast.makeText(getContext(), "Sửa thành công!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                LayDanhSach();
+            }
+        });
+
+        btnHuySua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void LayDanhSach(){
+        info = v_dtb.ThongTinCaNhan(v_taikhoan.getString("taikhoan",""));
+        tvMaNguoiDung.setText(" "+info.get(0));
+        tvTenNguoiDung.setText(" "+info.get(1));
+        tvTenDangNhap.setText(" "+info.get(2));
+        tvDiaChi.setText(" "+info.get(3));
+        tvSDT.setText(" "+info.get(4));
+    }
+
     private void AnhXa(View view) {
         btnDangXuat = (Button) view.findViewById(R.id.btnDangXuat);
         btnDoiMatKhau = (Button) view.findViewById(R.id.buttonDoiMatKhau);
@@ -106,6 +171,9 @@ public class ThongTinCaNhanFragment extends Fragment {
         edtMatKhauCu = (EditText) view.findViewById(R.id.editTextMatKhauCu);
         edtMatKhauMoi1 = (EditText) view.findViewById(R.id.editTextMatKhauMoi);
         edtMatKhauMoi2 = (EditText) view.findViewById(R.id.editTextMatKhauMoi2);
+        imgSuaTen = (ImageView) view.findViewById(R.id.buttonSuaTen);
+        imgSuaDiaChi = (ImageView) view.findViewById(R.id.buttonSuaDiaChi);
+        imgSuaSDT = (ImageView) view.findViewById(R.id.buttonSuaSDT);
         v_dtb = new Database(getContext());
         info = new ArrayList<>();
     }

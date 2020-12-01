@@ -9,14 +9,15 @@
         android:id="@+id/textViewTenNguoiBinhLuan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
+        android:textSize="15dp"
         android:textColor="#4CAF50"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/textViewNoiDungBinhLuan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:text="TextView" />
 </LinearLayout>
