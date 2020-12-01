@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.doan.Database;
+import com.example.doan.GioHang;
 import com.example.doan.GioHangAdapter;
 import com.example.doan.R;
 import com.example.doan.Sach;
@@ -30,12 +32,13 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
     private ListView lvGioHang;
     private TextView thanhtien;
     private Button btnThanhToan;
-    private ArrayList<Sach> giohangArrayList;
+    private ArrayList<GioHang> giohangArrayList;
     private GioHangAdapter v_adapter;
     private SharedPreferences v_giohang;
     private Gson v_gson;
     private String v_json;
     private LinkedHashMap v_lhm;
+    private Database v_dtb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
 
         //giohangArrayList.add(new Sach(1, "Lập trình Android từ cơ bản đến nâng cao",0,"", 120000, 2));
 
+        v_adapter.notifyDataSetChanged();
         lvGioHang.setAdapter(v_adapter);
 
         return view;
@@ -58,11 +62,12 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
         thanhtien = (TextView) view.findViewById(R.id.textViewThanhTien);
         btnThanhToan = (Button) view.findViewById(R.id.buttonThanhToan);
         giohangArrayList = new ArrayList<>();
-        v_adapter = new GioHangAdapter(getContext(), R.layout.san_pham_gio_hang, giohangArrayList, this);
         v_giohang = getContext().getSharedPreferences("giohang", Context.MODE_PRIVATE);
         v_gson = new Gson();
         v_json = v_giohang.getString("giohang","");
-        v_lhm = v_gson.fromJson(v_json, LinkedHashMap.class);
+        giohangArrayList = v_gson.fromJson(v_json, ArrayList.class);
+        v_adapter = new GioHangAdapter(getContext(), R.layout.san_pham_gio_hang, giohangArrayList, this);
+        v_dtb = new Database(getContext());
     }
 
     public void DialogXoaGioHang(String tensach){

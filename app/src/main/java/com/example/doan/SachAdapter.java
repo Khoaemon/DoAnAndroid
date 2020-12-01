@@ -26,7 +26,8 @@ public class SachAdapter extends BaseAdapter {
     private int c_layout;
     private ArrayList<Sach> sachArrayList;
     private SharedPreferences v_giohang;
-    LinkedHashMap<Integer, Integer> v_lhm;
+    private ArrayList<GioHang> v_gioHangArrayList;
+    private LinkedHashMap<Integer, Integer> v_lhm;
 
     public SachAdapter(Context v_context, int c_layout, ArrayList<Sach> sachArrayList) {
         this.v_context = v_context;
@@ -50,7 +51,7 @@ public class SachAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater v_inflater = (LayoutInflater) v_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = v_inflater.inflate(c_layout, null);
 
@@ -59,7 +60,8 @@ public class SachAdapter extends BaseAdapter {
         ImageView img = (ImageView) convertView.findViewById(R.id.imgSach);
         Button btnThem = (Button) convertView.findViewById(R.id.buttonThem);
         v_giohang = v_context.getSharedPreferences("giohang", MODE_PRIVATE);
-        v_lhm = new LinkedHashMap<>();
+        v_gioHangArrayList = new ArrayList<>();
+        v_lhm = new LinkedHashMap<Integer, Integer>();
 
         final Sach v_sach = sachArrayList.get(position);
         v_tensach.setText(v_sach.getTenSach());
@@ -69,16 +71,43 @@ public class SachAdapter extends BaseAdapter {
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v_lhm.get(v_sach.getMaSach())==null){
+                /*if (v_lhm.get(v_sach.getMaSach())==null){
                     v_lhm.put(v_sach.getMaSach(), 1);
+                    v_gioHangArrayList.add(new GioHang(v_sach.getMaSach()));
                 }else{
                     int v_soluong = v_lhm.get(v_sach.getMaSach());
                     v_lhm.put(v_sach.getMaSach(), v_soluong++);
-                }
-                SharedPreferences.Editor v_editor = v_giohang.edit();
+                    for(int i = 0; i < v_gioHangArrayList.size(); i++){
+                        if(v_gioHangArrayList.get(i).getMaSach()==v_sach.getMaSach()){
+
+                        }
+                    }
+                }*/
+
                 Gson v_gson = new Gson();
-                String v_json = v_gson.toJson(v_lhm);
-                v_editor.putString("giohang", v_json);
+                String v_json1 = v_giohang.getString("giohang","");
+                v_gioHangArrayList = v_gson.fromJson(v_json1, ArrayList.class);
+                Boolean flag = false;
+
+                if (v_gioHangArrayList==null) {
+                    v_gioHangArrayList = new ArrayList<>();
+                    v_gioHangArrayList.add(new GioHang(v_sach.getMaSach(), 0));
+                }else{
+                    for(int i = 0; i < v_gioHangArrayList.size(); i++){
+                        if(v_gioHangArrayList.get(i).getMaSach()==v_sach.getMaSach()){
+                            int v_soluong = v_gioHangArrayList.get(i).getSoLuong();
+                            v_gioHangArrayList.get(i).setSoLuong(v_soluong++);
+                            flag = true;
+                        }
+                    }
+                    if(flag==false){
+                        v_gioHangArrayList.add(new GioHang(v_sach.getMaSach(), 0));
+                    }
+                }
+
+                SharedPreferences.Editor v_editor = v_giohang.edit();
+                String v_json2 = v_gson.toJson(v_gioHangArrayList);
+                v_editor.putString("giohang", v_json2);
                 v_editor.commit();
                 Toast.makeText(v_context, "Đã thêm vào giỏ hàng.", Toast.LENGTH_SHORT).show();
             }

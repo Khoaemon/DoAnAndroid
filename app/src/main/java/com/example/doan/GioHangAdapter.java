@@ -18,7 +18,7 @@ public class GioHangAdapter extends BaseAdapter {
 
     private Context v_context;
     private int c_layout;
-    private ArrayList<Sach> sachArrayList;
+    private ArrayList<GioHang> gioHangArrayList;
     private EventListener listener;
 
 
@@ -26,16 +26,16 @@ public class GioHangAdapter extends BaseAdapter {
         void DialogXoaGioHang(String tensach);
     }
 
-    public GioHangAdapter(Context v_context, int c_layout, ArrayList<Sach> sachArrayList, EventListener listener) {
+    public GioHangAdapter(Context v_context, int c_layout, ArrayList<GioHang> gioHangArrayList, EventListener listener) {
         this.v_context = v_context;
         this.c_layout = c_layout;
-        this.sachArrayList = sachArrayList;
+        this.gioHangArrayList = gioHangArrayList;
         this.listener = listener;
     }
 
     @Override
     public int getCount() {
-        return sachArrayList.size();
+        return gioHangArrayList.size();
     }
 
     @Override
@@ -62,11 +62,12 @@ public class GioHangAdapter extends BaseAdapter {
         Button btnHuy = (Button) convertView.findViewById(R.id.buttonHuy);
 
 
-        final Sach v_sanphamgiohang = sachArrayList.get(position);
+        final GioHang v_sanphamgiohang = gioHangArrayList.get(position);
 
         v_tensach.setText(v_sanphamgiohang.getTenSach());
         v_giaban.setText(v_sanphamgiohang.getGia()+"");
-        //v_sl.setText(v_sanphamgiohang.getSoLuong()+"");
+        v_sl.setText(v_sanphamgiohang.getSoLuong()+"");
+        img.setImageResource(v_sanphamgiohang.getImg());
 
         btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override
