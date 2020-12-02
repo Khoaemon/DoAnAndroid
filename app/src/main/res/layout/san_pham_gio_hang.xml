@@ -20,7 +20,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgSanPhamGioHang"
         app:layout_constraintEnd_toStartOf="@+id/buttonHuy"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
         <TextView
             android:id="@+id/textViewTenSachGioHang"
             android:layout_width="wrap_content"
@@ -50,7 +51,9 @@
                 android:layout_height="wrap_content"
                 android:text="10"
                 android:textSize="20dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
             <ImageView
                 android:id="@+id/buttonTang"
                 android:layout_width="wrap_content"

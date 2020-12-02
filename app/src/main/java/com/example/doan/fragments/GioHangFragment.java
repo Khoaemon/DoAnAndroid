@@ -37,6 +37,7 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
     private ArrayList<GioHang> giohangArrayList;
     private GioHangAdapter v_adapter;
     private SharedPreferences v_giohang;
+    private SharedPreferences v_taikhoan;
     private Gson v_gson;
     private String v_json;
     private Type v_type;
@@ -66,6 +67,22 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
 
         SetTongTien(v_tongtien);
 
+        btnThanhToan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(giohangArrayList.size() < 1){
+                    Toast.makeText(getContext(), "Bạn chưa có gì trong giỏ hàng cả!", Toast.LENGTH_SHORT).show();
+                }else{
+                    v_dtb.ThemHoaDon(v_taikhoan.getString("taikhoan",""), giohangArrayList, v_tongtien);
+                    giohangArrayList.clear();
+                    v_adapter.notifyDataSetChanged();
+                    SetTongTien(0);
+                    Toast.makeText(getContext(), "Cảm ơn bạn đã mua hàng!", Toast.LENGTH_SHORT).show();
+                    UpdatePreferenceFile();
+                }
+            }
+        });
+
         v_adapter.notifyDataSetChanged();
         lvGioHang.setAdapter(v_adapter);
 
@@ -77,6 +94,7 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
         tvThanhTien = (TextView) view.findViewById(R.id.textViewThanhTien);
         btnThanhToan = (Button) view.findViewById(R.id.buttonThanhToan);
         v_giohang = getContext().getSharedPreferences("giohang", Context.MODE_PRIVATE);
+        v_taikhoan = getContext().getSharedPreferences("taikhoan", Context.MODE_PRIVATE);
         v_type = new TypeToken<ArrayList<GioHang>>(){}.getType();
         v_gson = new Gson();
         v_json = v_giohang.getString("giohang","");

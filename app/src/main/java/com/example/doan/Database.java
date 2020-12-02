@@ -220,7 +220,27 @@ public class Database extends SQLiteOpenHelper {
         return a;
     }
 
-
+    public void ThemHoaDon(String v_tendangnhap, ArrayList<GioHang> a, double v_tongtien){
+        String v_manguoidung = "";
+        if(v_tendangnhap.equals("")){
+            ThemXoaSua("INSERT INTO NGUOIDUNG VALUES(null, 'Vãng Lai', null, null, null, null, 0)");
+            Cursor v_cursor1 = Xem("SELECT last_insert_rowid()");
+            while(v_cursor1.moveToNext()){
+                v_manguoidung = v_cursor1.getInt(0)+"";
+            }
+        }else{
+            v_manguoidung = LayMaNguoiDung(v_tendangnhap);
+        }
+        ThemXoaSua("INSERT INTO HOADON VALUES(null, '"+v_manguoidung+"', '"+LayThoiGianHienTai()+"','"+v_tongtien+"')");
+        Cursor v_cursor2 = Xem("SELECT last_insert_rowid()");
+        int v_key = -1;
+        while(v_cursor2.moveToNext()){
+            v_key = v_cursor2.getInt(0);
+        }
+        for(int i = 0; i < a.size(); i++){
+            ThemXoaSua("INSERT INTO CTHD VALUES('"+v_key+"','"+a.get(i).getMaSach()+"','"+a.get(i).getSoLuong()+"','"+a.get(i).getGia()+"')");
+        }
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
