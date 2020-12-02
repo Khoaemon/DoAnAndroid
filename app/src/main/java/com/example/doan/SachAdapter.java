@@ -13,8 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -27,7 +29,6 @@ public class SachAdapter extends BaseAdapter {
     private ArrayList<Sach> sachArrayList;
     private SharedPreferences v_giohang;
     private ArrayList<GioHang> v_gioHangArrayList;
-    private LinkedHashMap<Integer, Integer> v_lhm;
 
     public SachAdapter(Context v_context, int c_layout, ArrayList<Sach> sachArrayList) {
         this.v_context = v_context;
@@ -61,7 +62,6 @@ public class SachAdapter extends BaseAdapter {
         Button btnThem = (Button) convertView.findViewById(R.id.buttonThem);
         v_giohang = v_context.getSharedPreferences("giohang", MODE_PRIVATE);
         v_gioHangArrayList = new ArrayList<>();
-        v_lhm = new LinkedHashMap<Integer, Integer>();
 
         final Sach v_sach = sachArrayList.get(position);
         v_tensach.setText(v_sach.getTenSach());
@@ -71,45 +71,32 @@ public class SachAdapter extends BaseAdapter {
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if (v_lhm.get(v_sach.getMaSach())==null){
-                    v_lhm.put(v_sach.getMaSach(), 1);
-                    v_gioHangArrayList.add(new GioHang(v_sach.getMaSach()));
-                }else{
-                    int v_soluong = v_lhm.get(v_sach.getMaSach());
-                    v_lhm.put(v_sach.getMaSach(), v_soluong++);
-                    for(int i = 0; i < v_gioHangArrayList.size(); i++){
-                        if(v_gioHangArrayList.get(i).getMaSach()==v_sach.getMaSach()){
-
-                        }
-                    }
-                }*/
-
+                Type v_type = new TypeToken<ArrayList<GioHang>>(){}.getType();
                 Gson v_gson = new Gson();
                 String v_json1 = v_giohang.getString("giohang","");
-                v_gioHangArrayList = v_gson.fromJson(v_json1, ArrayList.class);
+                v_gioHangArrayList = v_gson.fromJson(v_json1, v_type);
                 Boolean flag = false;
 
                 if (v_gioHangArrayList==null) {
                     v_gioHangArrayList = new ArrayList<>();
-                    v_gioHangArrayList.add(new GioHang(v_sach.getMaSach(), 0));
+                    v_gioHangArrayList.add(new GioHang(v_sach.getMaSach(), 1));
                 }else{
                     for(int i = 0; i < v_gioHangArrayList.size(); i++){
                         if(v_gioHangArrayList.get(i).getMaSach()==v_sach.getMaSach()){
                             int v_soluong = v_gioHangArrayList.get(i).getSoLuong();
-                            v_gioHangArrayList.get(i).setSoLuong(v_soluong++);
+                            v_gioHangArrayList.get(i).setSoLuong(++v_soluong);
                             flag = true;
                         }
                     }
                     if(flag==false){
-                        v_gioHangArrayList.add(new GioHang(v_sach.getMaSach(), 0));
+                        v_gioHangArrayList.add(new GioHang(v_sach.getMaSach(), 1));
                     }
                 }
 
                 SharedPreferences.Editor v_editor = v_giohang.edit();
-                String v_json2 = v_gson.toJson(v_gioHangArrayList);
+                String v_json2 = v_gson.toJson(v_gioHangArrayList, v_type);
                 v_editor.putString("giohang", v_json2);
-                v_editor.commit();
-                Toast.makeText(v_context, "Đã thêm vào giỏ hàng.", Toast.LENGTH_SHORT).show();
+                v_editor.apply();
             }
         });
 

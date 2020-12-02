@@ -42,7 +42,7 @@ public class DangNhapActivity extends AppCompatActivity {
                 if(flag == true){
                     SharedPreferences.Editor v_editor = v_taikhoan.edit();
                     v_editor.putString("taikhoan", edtTenDangNhap.getText().toString());
-                    v_editor.commit();
+                    v_editor.apply();
                     Toast.makeText(DangNhapActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                     finish();
                 }else{

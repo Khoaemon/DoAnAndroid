@@ -47,7 +47,7 @@ public class Database extends SQLiteOpenHelper {
         return v_manguoidung+"";
     }
 
-    public Sach LayMotCuonSach(String v_masach, int v_soluong){
+    public Sach LayMotCuonSach(int v_masach){
         Cursor v_sach = Xem("SELECT * FROM Sach WHERE MaSach='"+v_masach+"'");
         v_sach.moveToNext();
         Sach a = new Sach(v_sach.getInt(0),
