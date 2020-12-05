@@ -16,7 +16,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:text="Đăng ký tài khoản"
                 android:layout_marginTop="@dimen/normal_margin"
                 android:textColor="@color/colorPrimary"
@@ -31,12 +31,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Họ Tên: "
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/normal_text_size" />
                 <EditText
                     android:id="@+id/editTextHoTen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nhập họ tên..."/>
+                    android:hint="Nhập họ tên..."
+                    android:textSize="@dimen/normal_text_size"/>
             </LinearLayout>
 
             <LinearLayout
@@ -48,13 +49,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tên đăng nhập: "
-                    android:textSize="20dp"
+                    android:textSize="@dimen/normal_text_size"
                     android:layout_weight="1"/>
                 <EditText
                     android:id="@+id/editTextTenDangNhap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nhập tên đăng nhập..."/>
+                    android:hint="Nhập tên đăng nhập..."
+                    android:textSize="@dimen/normal_text_size"/>
             </LinearLayout>
 
             <LinearLayout
@@ -66,13 +68,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mật khẩu: "
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/normal_text_size" />
                 <EditText
                     android:id="@+id/editTextMatKhau1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:hint="Nhập mật khẩu..."/>
+                    android:hint="Nhập mật khẩu..."
+                    android:textSize="@dimen/normal_text_size"/>
             </LinearLayout>
 
             <LinearLayout
@@ -84,13 +87,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nhập lại mật khẩu: "
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/normal_text_size" />
                 <EditText
                     android:id="@+id/editTextMatKhau2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:hint="Nhập lại mật khẩu..."/>
+                    android:hint="Nhập lại mật khẩu..."
+                    android:textSize="@dimen/normal_text_size"/>
             </LinearLayout>
 
             <LinearLayout
@@ -102,12 +106,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Địa chỉ: "
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/normal_text_size" />
                 <EditText
                     android:id="@+id/editTextDiaChi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nhập địa chỉ..."/>
+                    android:hint="Nhập địa chỉ..."
+                    android:textSize="@dimen/normal_text_size"/>
             </LinearLayout>
 
             <LinearLayout
@@ -119,13 +124,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Số điện thoại: "
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/normal_text_size" />
                 <EditText
                     android:id="@+id/editTextSDT"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:hint="Nhập số điện thoại..."/>
+                    android:hint="Nhập số điện thoại..."
+                    android:textSize="@dimen/normal_text_size"/>
             </LinearLayout>
 
             <Button

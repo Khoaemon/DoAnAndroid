@@ -11,12 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import com.example.doan.fragments.GioHangFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.Locale;
 
 public class GioHangAdapter extends BaseAdapter {
 
@@ -77,7 +83,7 @@ public class GioHangAdapter extends BaseAdapter {
         final GioHang v_sanphamgiohang = gioHangArrayList.get(position);
 
         v_tensach.setText(v_sanphamgiohang.getTenSach());
-        v_giaban.setText(v_sanphamgiohang.getGia()+" VNĐ");
+        v_giaban.setText(NumberFormat.getNumberInstance(Locale.US).format(v_sanphamgiohang.getGia())+" VNĐ");
         v_sl.setText(v_sanphamgiohang.getSoLuong()+"");
         img.setImageResource(v_sanphamgiohang.getImg());
 
@@ -87,6 +93,8 @@ public class GioHangAdapter extends BaseAdapter {
                 listener.DialogXoaGioHang(v_sanphamgiohang.getMaSach(), v_sanphamgiohang.getTenSach());
             }
         });
+
+        final AppCompatActivity activity = (AppCompatActivity) convertView.getContext();
 
         btnTang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +115,7 @@ public class GioHangAdapter extends BaseAdapter {
                 v_soluonghientai--;
                 if(v_soluonghientai == 0){
                     gioHangArrayList.remove(position);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new GioHangFragment()).addToBackStack(null).commit();
                 }else{
                     v_sl.setText(v_soluonghientai+"");
                     v_sanphamgiohang.setSoLuong(v_soluonghientai);

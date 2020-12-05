@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +28,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 
 public class GioHangFragment extends Fragment implements GioHangAdapter.EventListener{
@@ -66,28 +69,29 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
                 v_tongtien += v_sach.getGia()*giohangArrayList.get(i).getSoLuong();
             }
         }
+        UpdatePreferenceFile();
 
         SetTongTien(v_tongtien);
 
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent v_intent = new Intent(getContext(), XemLaiHoaDonActivity.class);
-                startActivity(v_intent);
-                /*if(giohangArrayList.size() < 1){
+                if(giohangArrayList.size() < 1){
                     Toast.makeText(getContext(), "Bạn chưa có gì trong giỏ hàng cả!", Toast.LENGTH_SHORT).show();
                 }else{
-                    v_dtb.ThemHoaDon(v_taikhoan.getString("taikhoan",""), giohangArrayList, v_tongtien);
+                    /*v_dtb.ThemHoaDon(v_taikhoan.getString("taikhoan",""), giohangArrayList, v_tongtien);
                     giohangArrayList.clear();
                     v_adapter.notifyDataSetChanged();
                     SetTongTien(0);
                     Toast.makeText(getContext(), "Cảm ơn bạn đã mua hàng!", Toast.LENGTH_SHORT).show();
-                    UpdatePreferenceFile();
-                }*/
+                    UpdatePreferenceFile();*/
+                    Intent v_intent = new Intent(getContext(), XemLaiHoaDonActivity.class);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new SachFragment()).commit();
+                    startActivity(v_intent);
+                }
             }
         });
 
-        v_adapter.notifyDataSetChanged();
         lvGioHang.setAdapter(v_adapter);
 
         return view;
@@ -112,7 +116,7 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
 
     public void SetTongTien(double a){
         v_tongtien = a;
-        tvThanhTien.setText(v_tongtien+" VNĐ");
+        tvThanhTien.setText(NumberFormat.getNumberInstance(Locale.US).format(v_tongtien)+" VNĐ");
     }
 
     public double GetTongTien(){
@@ -130,9 +134,11 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
                         v_tongtien -= giohangArrayList.get(i).getGia()*giohangArrayList.get(i).getSoLuong();
                         giohangArrayList.remove(i);
                         SetTongTien(v_tongtien);
+                        break;
                     }
                 }
                 UpdatePreferenceFile();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new GioHangFragment()).commit();
             }
         });
         dialogXoa.setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -143,6 +149,8 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
         });
         dialogXoa.show();
     }
+
+
 
     public void UpdatePreferenceFile(){
         SharedPreferences.Editor v_editor = v_giohang.edit();

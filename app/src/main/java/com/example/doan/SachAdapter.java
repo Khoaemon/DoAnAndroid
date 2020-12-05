@@ -17,8 +17,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -65,7 +67,7 @@ public class SachAdapter extends BaseAdapter {
 
         final Sach v_sach = sachArrayList.get(position);
         v_tensach.setText(v_sach.getTenSach());
-        v_giaban.setText(v_sach.getGia()+" VNĐ");
+        v_giaban.setText(NumberFormat.getNumberInstance(Locale.US).format(v_sach.getGia())+" VNĐ");
         img.setImageResource(v_sach.getImgURL());
 
         btnThem.setOnClickListener(new View.OnClickListener() {
