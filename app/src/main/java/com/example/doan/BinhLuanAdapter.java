@@ -44,10 +44,12 @@ public class BinhLuanAdapter extends BaseAdapter {
 
         TextView v_ten = (TextView) convertView.findViewById(R.id.textViewTenNguoiBinhLuan);
         TextView v_noidung = (TextView) convertView.findViewById(R.id.textViewNoiDungBinhLuan);
+        TextView v_thoigian = (TextView) convertView.findViewById(R.id.textViewNgayBinhLuan);
 
         BinhLuan v_binhluan = binhluanArrayList.get(position);
         v_ten.setText(v_binhluan.getTenNguoiDung());
         v_noidung.setText(v_binhluan.getNoiDung());
+        v_thoigian.setText(v_binhluan.getNgayBinhLuan());
 
         return convertView;
     }
