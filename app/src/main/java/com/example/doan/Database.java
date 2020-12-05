@@ -235,7 +235,17 @@ public class Database extends SQLiteOpenHelper {
         return a;
     }
 
-    public void ThemHoaDon(String v_tendangnhap, ArrayList<GioHang> a, double v_tongtien){
+    public int ThemTTGH(ArrayList<String> a){
+        ThemXoaSua("INSERT INTO ThongTinGiaoHang values(null, '"+a.get(0)+"', '"+a.get(1)+"', '"+a.get(2)+"', '"+a.get(3)+"')");
+        Cursor v_cursor = Xem("SELECT last_insert_rowid()");
+        int v_mattgh = 0;
+        while(v_cursor.moveToNext()){
+            v_mattgh = v_cursor.getInt(0);
+        }
+        return v_mattgh;
+    }
+
+    public void ThemHoaDon(String v_tendangnhap, ArrayList<GioHang> a, double v_tongtien, int v_mattgh){
         String v_manguoidung = "";
         if(v_tendangnhap.equals("")){
             ThemXoaSua("INSERT INTO NGUOIDUNG VALUES(null, 'Vãng Lai', null, null, null, null, 0)");
@@ -246,7 +256,7 @@ public class Database extends SQLiteOpenHelper {
         }else{
             v_manguoidung = LayMaNguoiDung(v_tendangnhap);
         }
-        ThemXoaSua("INSERT INTO HOADON VALUES(null, '"+v_manguoidung+"', '"+LayThoiGianHienTai()+"','"+v_tongtien+"')");
+        ThemXoaSua("INSERT INTO HOADON VALUES(null, '"+v_manguoidung+"', "+v_mattgh+", '"+LayThoiGianHienTai()+"','"+v_tongtien+"')");
         Cursor v_cursor2 = Xem("SELECT last_insert_rowid()");
         int v_key = -1;
         while(v_cursor2.moveToNext()){

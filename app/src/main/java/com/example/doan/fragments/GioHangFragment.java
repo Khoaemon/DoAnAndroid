@@ -2,6 +2,7 @@ package com.example.doan.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import com.example.doan.GioHang;
 import com.example.doan.GioHangAdapter;
 import com.example.doan.R;
 import com.example.doan.Sach;
+import com.example.doan.XemLaiHoaDonActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -70,7 +72,9 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(giohangArrayList.size() < 1){
+                Intent v_intent = new Intent(getContext(), XemLaiHoaDonActivity.class);
+                startActivity(v_intent);
+                /*if(giohangArrayList.size() < 1){
                     Toast.makeText(getContext(), "Bạn chưa có gì trong giỏ hàng cả!", Toast.LENGTH_SHORT).show();
                 }else{
                     v_dtb.ThemHoaDon(v_taikhoan.getString("taikhoan",""), giohangArrayList, v_tongtien);
@@ -79,7 +83,7 @@ public class GioHangFragment extends Fragment implements GioHangAdapter.EventLis
                     SetTongTien(0);
                     Toast.makeText(getContext(), "Cảm ơn bạn đã mua hàng!", Toast.LENGTH_SHORT).show();
                     UpdatePreferenceFile();
-                }
+                }*/
             }
         });
 
