@@ -267,6 +267,17 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
+    public void XoaHoaDon(String v_mahd){
+        Cursor v_cursor = Xem("SELECT MaTTGH FROM HoaDon WHERE MAHD='"+v_mahd+"'");
+        int v_mattgh = 0;
+        while(v_cursor.moveToNext()){
+            v_mattgh = v_cursor.getInt(0);
+        }
+        ThemXoaSua("DELETE FROM CTHD WHERE MaHD='"+v_mahd+"'");
+        ThemXoaSua("DELETE FROM HoaDon WHERE MaHD='"+v_mahd+"'");
+        ThemXoaSua("DELETE FROM ThongTinGiaoHang WHERE MaTTGH='"+v_mattgh+"'");
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table  Sach(\n" +

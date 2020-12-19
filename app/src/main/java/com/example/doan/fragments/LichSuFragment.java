@@ -1,8 +1,10 @@
 package com.example.doan.fragments;
 
+import android.content.AsyncQueryHandler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -32,6 +34,7 @@ public class LichSuFragment extends Fragment {
     private HoaDonAdapter v_adapter;
     private SharedPreferences v_taikhoan;
     private Database v_dtb;
+    private Boolean shouldRefreshOnResume = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,9 +64,24 @@ public class LichSuFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(shouldRefreshOnResume){
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new LichSuFragment()).commit();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        shouldRefreshOnResume = true;
+    }
+
     private void AnhXa(View view) {
         hoadonListView = view.findViewById(R.id.lvHoaDon);
         v_dtb = new Database(getContext());
         v_adapter = new HoaDonAdapter(getContext(), R.layout.dong_hoa_don, v_dtb.LayDanhSachHoaDon(v_taikhoan.getString("taikhoan","")));
     }
+
 }
