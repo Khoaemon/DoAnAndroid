@@ -1,13 +1,16 @@
 package com.example.doan;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class HoaDonAdapter extends BaseAdapter {
 
@@ -49,7 +52,13 @@ public class HoaDonAdapter extends BaseAdapter {
 
         ngayxuatHD.setText(v_hd.getNgayXuat());
         maHD.setText(v_hd.getMaHD()+"");
-        thanhtien.setText(v_hd.getThanhTien()+"");
+        if(v_hd.getTrangThai()==0){
+            thanhtien.setText("ĐÃ HỦY");
+            thanhtien.setTextColor(Color.parseColor("#FF0000"));
+        }else{
+            thanhtien.setText(NumberFormat.getNumberInstance(Locale.US).format(v_hd.getThanhTien())+"");
+        }
+
 
         return convertView;
     }

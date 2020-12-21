@@ -143,24 +143,42 @@
                 android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:weightSum="10"
+        android:layout_marginTop="@dimen/normal_margin">
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ghi chú: " />
+        <TextView
+            android:id="@+id/textViewGhiChu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:text="ghi chú ở đây"
+            android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:weightSum="10"
             android:layout_marginTop="@dimen/normal_margin">
             <TextView
-                android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ghi chú: " />
+                android:text="Trạng thái đơn hàng: " />
             <TextView
-                android:id="@+id/textViewGhiChu"
+                android:id="@+id/textViewTrangThai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
-                android:text="ghi chú ở đây"
+                android:text="đây là trạng thái"
                 android:textStyle="bold" />
-        </LinearLayout>
+            </LinearLayout>
 
     </LinearLayout>
     <Button

@@ -199,7 +199,8 @@ public class Database extends SQLiteOpenHelper {
             a.add(new HoaDon(
                     v_hoadon.getInt(0),
                     v_hoadon.getString(3).substring(0,10),
-                    v_hoadon.getDouble(4)
+                    v_hoadon.getDouble(4),
+                    v_hoadon.getInt(5)
             ));
         }
         return a;
@@ -223,7 +224,7 @@ public class Database extends SQLiteOpenHelper {
 
     public ArrayList<String> LayDanhSachTTGH(String v_mahd){
         ArrayList<String> a = new ArrayList<>();
-        Cursor v_ttgh = Xem("SELECT HoTen, SDT, DiaChi, GhiChu " +
+        Cursor v_ttgh = Xem("SELECT HoTen, SDT, DiaChi, GhiChu, TrangThai " +
                 "FROM HoaDon HD, ThongTinGiaoHang TTGH " +
                 "WHERE HD.MaTTGH = TTGH.MaTTGH AND MaHD='"+v_mahd+"'");
         while(v_ttgh.moveToNext()){
@@ -231,6 +232,13 @@ public class Database extends SQLiteOpenHelper {
             a.add(v_ttgh.getString(1));
             a.add(v_ttgh.getString(2));
             a.add(v_ttgh.getString(3));
+            switch (v_ttgh.getInt(4)){
+                case 0: a.add("ĐÃ HỦY"); break;
+                case 1: a.add("ĐANG CHỜ TIẾP NHẬN"); break;
+                case 2: a.add("ĐANG VẬN CHUYỂN"); break;
+                case 3: a.add("ĐÃ GIAO THÀNH CÔNG!"); break;
+            }
+
         }
         return a;
     }
@@ -256,7 +264,7 @@ public class Database extends SQLiteOpenHelper {
         }else{
             v_manguoidung = LayMaNguoiDung(v_tendangnhap);
         }
-        ThemXoaSua("INSERT INTO HOADON VALUES(null, '"+v_manguoidung+"', "+v_mattgh+", '"+LayThoiGianHienTai()+"','"+v_tongtien+"')");
+        ThemXoaSua("INSERT INTO HOADON VALUES(null, '"+v_manguoidung+"', "+v_mattgh+", '"+LayThoiGianHienTai()+"','"+v_tongtien+"',1)");
         Cursor v_cursor2 = Xem("SELECT last_insert_rowid()");
         int v_key = -1;
         while(v_cursor2.moveToNext()){
@@ -267,7 +275,7 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public void XoaHoaDon(String v_mahd){
+    /*public void XoaHoaDon(String v_mahd){
         Cursor v_cursor = Xem("SELECT MaTTGH FROM HoaDon WHERE MAHD='"+v_mahd+"'");
         int v_mattgh = 0;
         while(v_cursor.moveToNext()){
@@ -276,6 +284,19 @@ public class Database extends SQLiteOpenHelper {
         ThemXoaSua("DELETE FROM CTHD WHERE MaHD='"+v_mahd+"'");
         ThemXoaSua("DELETE FROM HoaDon WHERE MaHD='"+v_mahd+"'");
         ThemXoaSua("DELETE FROM ThongTinGiaoHang WHERE MaTTGH='"+v_mattgh+"'");
+    }*/
+
+    public int LayTrangThaiHoaDon(String v_mahd){
+        Cursor v_cursor = Xem("SELECT TrangThai FROM HoaDon WHERE MAHD='"+v_mahd+"'");
+        int v_trangthai = 0;
+        while(v_cursor.moveToNext()){
+            v_trangthai = v_cursor.getInt(0);
+        }
+        return v_trangthai;
+    }
+
+    public void HuyHoaDon(String v_mahd){
+        ThemXoaSua("UPDATE HoaDon set TrangThai=0 WHERE MaHD='"+v_mahd+"'");
     }
 
     @Override
@@ -340,6 +361,7 @@ public class Database extends SQLiteOpenHelper {
                 "\tMaTTGH INTEGER not null,\n" +
                 "\tNgayXuat datetime,\n" +
                 "\tThanhTien decimal(8,2),\n" +
+                "\tTrangThai INTEGER,\n" +
                 "\tFOREIGN key(MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung), \n" +
                 "\tFOREIGN key(MaTTGH) REFERENCES ThongTinGiaoHang(MaTTGH)\n" +
                 ");");
@@ -403,12 +425,12 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO ThongTinGiaoHang VALUES (null, 'Messi', '0235456701', 'QUAN 2', 'Ghi chú ghi chú ghi chú');");
         db.execSQL("INSERT INTO ThongTinGiaoHang VALUES (null, 'Ronaldinho', '0573456701', 'QUAN 3', 'Giao lẹ lên!');");
 
-        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien) VALUES (1,1,'2020-04-10 07:27:35', 300000.00);");
-        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien) VALUES (2,2,'2020-05-20 08:27:09', 400000.00);");
-        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien) VALUES (3,3,'2020-06-25 15:27:19', 500000.00);");
-        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien) VALUES (4,4,'2020-07-14 17:27:29', 600000.00);");
-        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien) VALUES (5,5,'2020-08-23 20:27:30', 700000.00);");
-        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien) VALUES (6,6,'2020-09-09 08:27:40', 800000.00);");
+        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien, TrangThai) VALUES (1,1,'2020-04-10 07:27:35', 300000.00, 3);");
+        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien, TrangThai) VALUES (2,2,'2020-05-20 08:27:09', 400000.00, 3);");
+        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien, TrangThai) VALUES (3,3,'2020-06-25 15:27:19', 500000.00, 3);");
+        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien, TrangThai) VALUES (4,4,'2020-07-14 17:27:29', 600000.00, 3);");
+        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien, TrangThai) VALUES (5,5,'2020-08-23 20:27:30', 700000.00, 3);");
+        db.execSQL("INSERT INTO HoaDon (MaNguoiDung,MaTTGH,NgayXuat,ThanhTien, TrangThai) VALUES (6,6,'2020-09-09 08:27:40', 800000.00, 3);");
 
         db.execSQL("INSERT INTO CTHD (MaHD,MaSach,SoLuong,DonGia) VALUES (1,3,2,600000.00);");
         db.execSQL("INSERT INTO CTHD (MaHD,MaSach,SoLuong,DonGia) VALUES (3,1,1,500000.00);");

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class ChiTietHoaDonActivity extends AppCompatActivity {
 
     private ListView hoadonListView;
-    private TextView tvTen, tvSDT, tvDiaChi, tvGhiChu;
+    private TextView tvTen, tvSDT, tvDiaChi, tvGhiChu, tvTrangThai;
     private CTHDAdapter v_adapter;
     private Intent v_intent;
     private Database v_dtb;
@@ -42,6 +43,24 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
         tvSDT.setText(" "+a.get(1));
         tvDiaChi.setText(" "+a.get(2));
         tvGhiChu.setText(" "+a.get(3));
+        tvTrangThai.setText(" "+a.get(4));
+        switch (v_dtb.LayTrangThaiHoaDon(v_intent.getStringExtra("mahoadon"))){
+            case 0:
+                tvTrangThai.setTextColor(Color.parseColor("#FF0000"));
+                btnHuyDon.setVisibility(View.GONE);
+                break;
+            case 1:
+                tvTrangThai.setTextColor(Color.parseColor("#ffa500"));
+                break;
+            case 2:
+                tvTrangThai.setTextColor(Color.parseColor("#ffa500"));
+                btnHuyDon.setVisibility(View.GONE);
+                break;
+            case 3:
+                tvTrangThai.setTextColor(Color.parseColor("#00FF00"));
+                btnHuyDon.setVisibility(View.GONE);
+                break;
+        }
 
         btnHuyDon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,9 +79,11 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
         dialogXoa.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                v_dtb.XoaHoaDon(v_intent.getStringExtra("mahoadon"));
+                v_dtb.HuyHoaDon(v_intent.getStringExtra("mahoadon"));
                 Toast.makeText(ChiTietHoaDonActivity.this, "Hủy Thành Công!", Toast.LENGTH_SHORT).show();
-                finish();
+                tvTrangThai.setText("ĐÃ HỦY");
+                tvTrangThai.setTextColor(Color.parseColor("#FF0000"));
+                btnHuyDon.setVisibility(View.GONE);
                 //getSupportFragmentManager().beginTransaction().replace(R.id.frlayout,new LichSuFragment()).commit();
             }
         });
@@ -81,6 +102,7 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
         tvSDT = findViewById(R.id.textViewSDTNhanHang);
         tvDiaChi = findViewById(R.id.textViewDiaChiNhanHang);
         tvGhiChu = findViewById(R.id.textViewGhiChu);
+        tvTrangThai = findViewById(R.id.textViewTrangThai);
         btnHuyDon = findViewById(R.id.btnHuyDon);
         v_intent = getIntent();
         v_dtb = new Database(this);

@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CTHDAdapter extends BaseAdapter {
 
@@ -52,7 +54,7 @@ public class CTHDAdapter extends BaseAdapter {
         masach.setText(v_cthd.getMaSach()+"");
         tensach.setText(v_cthd.getTenSach());
         soluong.setText(v_cthd.getSoLuong()+"");
-        dongia.setText(v_cthd.getDonGia()+"");
+        dongia.setText(NumberFormat.getNumberInstance(Locale.US).format(v_cthd.getDonGia())+"");
 
         return convertView;
     }

@@ -50,7 +50,6 @@ public class LichSuFragment extends Fragment {
 
         hoadonListView.setAdapter(v_adapter);
 
-
         hoadonListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
